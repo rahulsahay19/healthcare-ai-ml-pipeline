@@ -1,0 +1,40 @@
+# Data & ML
+pandas
+numpy
+scikit-learn
+xgboost
+imbalanced-learn
+joblib
+
+# MLflow
+mlflow
+
+# DVC
+dvc
+dvc-s3
+
+# Database
+sqlalchemy
+
+# API
+fastapi
+uvicorn
+pydantic
+
+# Monitoring
+evidently
+
+# Notebook
+jupyter
+ipykernel
+
+# Visualisation
+matplotlib
+seaborn
+
+# Testing
+pytest
+httpx
+
+# Utilities
+python-dotenv
