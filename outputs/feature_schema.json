@@ -1,0 +1,43 @@
+{
+    "risk_model_features": [
+        "age",
+        "gender",
+        "city",
+        "insurance_provider",
+        "chronic_flag",
+        "department",
+        "visit_type",
+        "doctor_id",
+        "length_of_stay_hours",
+        "days_since_registration",
+        "visit_frequency",
+        "avg_los_per_patient",
+        "visit_month",
+        "visit_dayofweek"
+    ],
+    "claim_model_features": [
+        "age",
+        "gender",
+        "city",
+        "insurance_provider",
+        "chronic_flag",
+        "department",
+        "visit_type",
+        "doctor_id",
+        "length_of_stay_hours",
+        "risk_score",
+        "billed_amount",
+        "days_since_registration",
+        "visit_frequency",
+        "avg_los_per_patient",
+        "provider_rejection_rate",
+        "visit_month",
+        "visit_dayofweek",
+        "high_cost_visit_flag"
+    ],
+    "risk_target": "risk_score",
+    "claim_target": "claim_status",
+    "risk_time_column": "visit_date",
+    "claim_time_column": "billing_date",
+    "split_strategy": "earliest 80 percent train, latest 20 percent test"
+}
