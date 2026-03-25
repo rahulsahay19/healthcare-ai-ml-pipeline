@@ -227,9 +227,12 @@ jupyter notebook notebooks/Phase2_EDA.ipynb
 jupyter notebook notebooks/Phase3_Modeling.ipynb
 
 # Phase 4 — Evaluation
-jupyter notebook notebooks/Phase4_Evaluation.ipynb
+jupyter notebook notebooks/Phase4_Mlflow.ipynb
 ```
-
+### Run the ML Flow
+```bash
+mlflow ui
+```
 ### Run the API
 
 ```bash
