@@ -233,6 +233,17 @@ jupyter notebook notebooks/Phase4_Mlflow.ipynb
 ```bash
 mlflow ui
 ```
+
+### Production Setup ML FLoW
+```bash
+mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 127.0.0.1 --port 5000
+```
+### Run the Pipeline
+```bash
+python -m src.training_pipeline --model risk
+python -m src.training_pipeline --model claim
+```
+
 ### Run the API
 
 ```bash
