@@ -1,0 +1,9 @@
+stages:
+  train_risk:
+    cmd: python -m src.training_pipeline --model risk
+    deps:
+    - outputs/model_table.csv
+    - src
+    outs:
+    - models/risk_model_complete_pipeline.joblib
+    - outputs/feature_schema.json
