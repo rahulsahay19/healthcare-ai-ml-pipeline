@@ -244,6 +244,17 @@ python -m src.training_pipeline --model risk
 python -m src.training_pipeline --model claim
 ```
 
+### DVC Pipeline
+For running the DVC Pipeline, MLflow server in another terminal should be running.
+- Creating Risk Pipeline
+```bash
+dvc stage add -n train_risk -d src -d outputs/model_table.csv -o models/risk_model_complete_pipeline.joblib -o outputs/feature_schema.json python -m src.training_pipeline --model risk
+```
+- Creating Claim Pipeline
+```bash
+uv run dvc stage add -n train_claim -d src -d outputs/model_table.csv -d outputs/feature_schema.json -o models/claim_model_complete_pipeline.joblib python -m src.training_pipeline --model claim
+```
+
 ### Run the API
 
 ```bash

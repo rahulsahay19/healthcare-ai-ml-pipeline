@@ -1,0 +1,1 @@
+[{"md5": "c22bfa7a50eb732d4ed3aeb2fcd8adfe", "relpath": "claim_model.joblib"}, {"md5": "be4bca1aa3cbe6be48f609aebb42de69", "relpath": "claim_model_complete_pipeline.joblib"}, {"md5": "21fba6946542b734a0766ff1e1fa5949", "relpath": "risk_model.joblib"}, {"md5": "08e5dbfdaa7ee2ef6abdb8302de3256a", "relpath": "risk_model_complete_pipeline.joblib"}]
