@@ -7,3 +7,11 @@ stages:
     outs:
     - models/risk_model_complete_pipeline.joblib
     - outputs/feature_schema.json
+  train_claim:
+    cmd: python -m src.training_pipeline --model claim
+    deps:
+    - outputs/feature_schema.json
+    - outputs/model_table.csv
+    - src
+    outs:
+    - models/claim_model_complete_pipeline.joblib
