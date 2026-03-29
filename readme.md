@@ -261,6 +261,12 @@ uv run dvc stage add -n train_claim -d src -d outputs/model_table.csv -d outputs
 uvicorn api.main:app --reload
 ```
 
+### Run the Gradio UI
+
+```bash
+python ui/gradio_app.py
+```
+
 API docs available at: `http://localhost:8000/docs`
 
 ---

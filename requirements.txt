@@ -36,5 +36,9 @@ seaborn
 pytest
 httpx
 
+# UI 
+gradio
+requests
+
 # Utilities
 python-dotenv
