@@ -176,23 +176,6 @@ Healthcare/
 
 ---
 
-## ⚙️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Data & ML | Python · Pandas · NumPy · Scikit-learn · XGBoost |
-| Experiment Tracking | MLflow |
-| Data Versioning | DVC · AWS S3 |
-| Database | SQLite · SQLAlchemy |
-| API | FastAPI · Uvicorn · Pydantic |
-| Monitoring | Evidently (PSI drift detection) |
-| Containerisation | Docker |
-| Cloud | AWS ECR · AWS EKS |
-| CI/CD | GitHub Actions |
-| Testing | Pytest · httpx |
-
----
-
 ## 🚀 Quick Start
 
 ### Prerequisites
