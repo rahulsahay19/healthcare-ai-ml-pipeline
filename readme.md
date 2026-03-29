@@ -266,11 +266,11 @@ API docs available at: `http://localhost:8000/docs`
 
 | Model | Algorithm | Test Accuracy | Weighted F1 |
 |---|---|---|---|
-| Visit Risk | Logistic Regression (baseline) | ~63% | 0.61 |
-| Visit Risk | Random Forest | ~78% | 0.76 |
-| Visit Risk | **XGBoost (final)** | **~83%** | **0.81** |
-| Claim Outcome | Logistic Regression (baseline) | ~61% | 0.59 |
-| Claim Outcome | **Random Forest (final)** | **~76%** | **0.74** |
+| Visit Risk | Logistic Regression (baseline) | ~91% | 0.90 |
+| Visit Risk | Random Forest | ~95% | 94 |
+| Visit Risk | **XGBoost (final)** | **~95%** | **0.94** |
+| Claim Outcome | Logistic Regression (baseline) | ~47% | 0.43 |
+| Claim Outcome | **Random Forest (final)** | **~55%** | **0.51** |
 
 > ⚠️ **Note:** This project intentionally demonstrates two data scenarios — random synthetic labels (Phase 3A) and clinically-derived labels (Phase 3B). The above numbers reflect Phase 3B (good data). This is a core teaching point of the course.
 
@@ -278,7 +278,7 @@ API docs available at: `http://localhost:8000/docs`
 
 ## 🔍 Key Teaching Points
 
-- **Label quality over model tuning** — same pipeline, 45% → 83% accuracy by fixing the data, not the model
+- **Label quality over model tuning** — same pipeline, 45% → 95% accuracy by fixing the data, not the model
 - **Time-based train/test split** — leakage-safe evaluation for temporal data
 - **Class imbalance handling** — class_weight, balanced_subsample, SMOTE
 - **Bias-variance tradeoff** — live demo of RF overfitting (97% train vs 43% test) and fix
