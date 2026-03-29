@@ -4,7 +4,13 @@
 
 An end-to-end enterprise ML system built on real hospital data — from raw CSVs to AWS Kubernetes deployment, with full MLOps tooling, monitoring, and governance.
 
+![Capstone Architecture](images/capstone_architecture.png)
+
 ---
+
+## ⚙️ Tech Stack
+
+![TechStack](images/techstack.png)
 
 ## 🎯 What This System Does
 
@@ -22,46 +28,43 @@ Raw Hospital Data
 (patients.csv · visits.csv · billing.csv)
         │
         ▼
-  SQL Analytics Layer
-     (SQLite · hospital.db)
+SQL Analytics Layer
+(SQLite · hospital.db)
         │
         ▼
-  Exploratory Data Analysis
-  (distributions · outliers · correlations)
+EDA + Feature Engineering
+(distributions · outliers · feature creation · label fixes)
         │
         ▼
-  Feature Engineering
-  (visit_frequency · avg_los · provider_rejection_rate)
+ML Models
+(Model A — Visit Risk · Model B — Claim Outcome)
         │
         ▼
-  ML Models (Scikit-learn · XGBoost)
-  ├── Model A — Visit Risk Classification
-  └── Model B — Claim Outcome Prediction
+MLOps Layer
+├── MLflow (experiment tracking)
+├── DVC (data versioning + pipelines)
+├── Model Artifacts (joblib files)
+├── Feature Schema (single source of truth)
+└── Predictions Log (audit trail)
         │
         ▼
-  MLflow Experiment Tracking
-  (params · metrics · model registry)
+Serving Layer
+├── FastAPI (prediction APIs)
+├── Pydantic (input validation)
+├── Gradio UI (demo interface)
+└── PSI Monitor (drift detection)
         │
         ▼
-  DVC Data Versioning
-  (model_table.csv · model artifacts → AWS S3)
+Cloud Deployment
+├── Docker (containerisation)
+├── AWS ECR (image registry)
+├── AWS EKS (Kubernetes deployment)
+├── GitHub Actions (CI/CD pipeline)
+└── Live Endpoint (scalable inference)
         │
         ▼
-  FastAPI Prediction Service
-  ├── /health
-  ├── /predict/risk
-  └── /predict/claim
-        │
-        ▼
-  Docker → AWS ECR
-        │
-        ▼
-  AWS EKS (Kubernetes)
-  (HPA · rolling updates · zero downtime)
-        │
-        ▼
-  Monitoring & Governance
-  (PSI drift detection · Model Card · Retraining Plan)
+Retrain Feedback Loop
+(drift → DVC repro → new model version)
 ```
 
 ---
@@ -70,57 +73,62 @@ Raw Hospital Data
 
 ```
 Healthcare/
-├── data/                    # Raw CSV files — never modified
-│   ├── patients.csv         # 5,000 patients
-│   ├── visits.csv           # 25,000 hospital visits
-│   └── billing.csv          # 25,000 billing records
+├── data/                    # Raw CSV data (source layer)
 │
-├── db/                      # SQLite database
+├── db/                      # SQLite DB (analytics layer)
 │   └── hospital.db
 │
-├── notebooks/               # Phase-wise Jupyter exploration
-│   ├── Phase1_SQL.ipynb     # SQL analytics layer
-│   ├── Phase2_EDA.ipynb     # Exploratory data analysis
-│   ├── Phase3_Modeling.ipynb # ML model development
-│   └── Phase4_Evaluation.ipynb # Model evaluation & explainability
+├── notebooks/               # Phase-wise EDA + modeling
 │
-├── src/                     # Production Python scripts
-│   ├── data_loader.py
+├── src/                     # Training pipeline (core ML logic)
+│   ├── training_pipeline.py
 │   ├── feature_engineering.py
-│   ├── train_risk_model.py
-│   └── train_claim_model.py
+│   └── model_training/
 │
-├── api/                     # FastAPI prediction service
+├── api/                     # FastAPI serving layer
 │   ├── main.py
-│   ├── routers/
-│   │   ├── risk.py
-│   │   └── claim.py
-│   ├── schemas/
-│   │   ├── risk_schema.py
-│   │   └── claim_schema.py
-│   └── prediction_logger.py
+│   ├── routers/             # /predict endpoints
+│   ├── schemas/             # Pydantic validation
+│   └── services/            # Model loading (joblib)
 │
-├── models/                  # Saved model artifacts
+├── ui/                      # Gradio UI (browser demo)
+│   └── gradio_app.py
+│
+├── monitoring/              # Drift detection + logging
+│   ├── psi_monitor.py
+│   └── logger.py
+│
+├── models/                  # Final production models
 │   ├── risk_model.joblib
 │   ├── claim_model.joblib
+│
+├── outputs/                 # Generated datasets
+│   ├── model_table.csv
 │   └── feature_schema.json
 │
-├── outputs/                 # Generated files & plots
-│   ├── model_table.csv
-│   └── eda_plots/
+├── mlruns/                  # MLflow experiment tracking
+├── mlartifacts/             # MLflow artifacts
+├── mlflow.db                # MLflow backend DB
 │
-├── report/                  # Governance documentation
+├── logs/                    # Prediction logs (audit trail)
+│   └── predictions.log
+│
+├── dvc-storage/             # DVC remote storage (local/S3)
+├── dvc.yaml                 # DVC pipeline definition
+├── dvc.lock
+│
+├── report/                  # Governance docs
 │   ├── model_card.md
 │   └── monitoring_strategy.md
 │
-├── tests/                   # Pytest test suite
-│   ├── test_api.py
-│   └── test_features.py
+├── tests/                   # Unit + API tests
 │
-├── Dockerfile               # Added in Docker section
-├── docker-compose.yml       # Added in Docker section
-├── .github/workflows/       # Added in CI/CD section
+├── Dockerfile               # FastAPI container
+├── docker-compose.yml       # Local multi-service setup
+│
+├── .github/workflows/       # CI/CD pipelines
 │   └── ci_cd.yml
+│
 ├── requirements.txt
 └── README.md
 ```
