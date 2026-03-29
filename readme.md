@@ -272,7 +272,7 @@ API docs available at: `http://localhost:8000/docs`
 | Claim Outcome | Logistic Regression (baseline) | ~47% | 0.43 |
 | Claim Outcome | **Random Forest (final)** | **~55%** | **0.51** |
 
-> ⚠️ **Note:** This project intentionally demonstrates two data scenarios — random synthetic labels (Phase 3A) and clinically-derived labels (Phase 3B). The above numbers reflect Phase 3B (good data). This is a core teaching point of the course.
+> ⚠️ **Note:** This project intentionally demonstrates two data scenarios — random synthetic labels (Phase 3A) and clinically-derived labels (Phase 3B). The above numbers reflect Phase 3B (good data). This is a core teaching point of the course. On the same line, claim data needs to be fixed.
 
 ---
 
@@ -286,6 +286,7 @@ API docs available at: `http://localhost:8000/docs`
 - **Production API design** — prediction logging, input validation, model versioning
 - **Drift detection** — PSI-based early warning for model degradation
 
+Assignment:- Fix Claim Data labels and then train the model.
 ---
 
 ## 🏛️ Governance
