@@ -313,6 +313,9 @@ Udemy Instructor · 47K+ Students
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Rahul_Sahay-blue)](https://linkedin.com/in/rahulsahay19)
 [![Udemy](https://img.shields.io/badge/Udemy-Courses-orange)](https://www.udemy.com/user/rahulsahay-2)
 
+🔗 Full course & architecture guide:
+https://rahulsahay.com
+
 > *Production First Architecture. Not Slideware.* — **#ArchitectMindset**
 
 ---
