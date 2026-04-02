@@ -4,6 +4,9 @@
 
 An end-to-end enterprise ML system built on real hospital data — from raw CSVs to AWS Kubernetes deployment, with full MLOps tooling, monitoring, and governance.
 
+[![Udemy Coupon](https://img.shields.io/badge/Udemy-RAHUL90OFF-green)](https://www.udemy.com/course/ai-system-design-mlops-from-raw-data-to-aws-kubernetes/?couponCode=2C53F66AED641DA982D2)
+
+
 ![Capstone Architecture](images/capstone_architecture.png)
 
 ---
@@ -296,6 +299,9 @@ Assignment:- Fix Claim Data labels and then train the model.
 - **Retraining Plan** — PSI threshold 0.2 triggers retraining pipeline
 
 ---
+
+## Enroll here
+[![Udemy Coupon](https://img.shields.io/badge/Udemy-RAHUL90OFF-green)](https://www.udemy.com/course/ai-system-design-mlops-from-raw-data-to-aws-kubernetes/?couponCode=2C53F66AED641DA982D2)
 
 ## 👨‍💻 Author
 
