@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: healthcare-api
+    ports:
+      - "8000:8000"
+
+  gradio:
+    build:
+      context: .
+      dockerfile: Dockerfile.gradio
+    container_name: healthcare-gradio
+    ports:
+      - "7860:7860"
+    environment:
+      - FASTAPI_BASE_URL=http://api:8000
+    depends_on:
+      - api

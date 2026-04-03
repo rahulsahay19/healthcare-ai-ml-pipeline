@@ -1,7 +1,9 @@
+import os
 import gradio as gr
 import requests
 
-FASTAPI_BASE_URL = "http://127.0.0.1:8000"
+FASTAPI_BASE_URL = os.getenv("FASTAPI_BASE_URL", "http://127.0.0.1:8000")
+
 
 def predict_risk_ui(
     age,
@@ -36,12 +38,11 @@ def predict_risk_ui(
         "visit_dayofweek": visit_dayofweek
     }
 
-    response = requests.post(f"{FASTAPI_BASE_URL}/predict/risk", json=payload)
+    response = requests.post(f"{FASTAPI_BASE_URL}/predict/risk", json=payload, timeout=30)
     response.raise_for_status()
     result = response.json()
-    print("Risk API response:", result)
     return str(result)
-    #return result.get("prediction: ", "No prediction returned")
+
 
 def predict_claim_ui(
     age,
@@ -84,11 +85,11 @@ def predict_claim_ui(
         "high_cost_visit_flag": high_cost_visit_flag
     }
 
-    response = requests.post(f"{FASTAPI_BASE_URL}/predict/claim", json=payload)
+    response = requests.post(f"{FASTAPI_BASE_URL}/predict/claim", json=payload, timeout=30)
     response.raise_for_status()
     result = response.json()
-
     return result.get("prediction", "No prediction returned")
+
 
 with gr.Blocks(title="Healthcare ML Prediction UI") as demo:
     gr.Markdown("# Healthcare ML Prediction UI")
@@ -192,4 +193,4 @@ with gr.Blocks(title="Healthcare ML Prediction UI") as demo:
 
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860)
