@@ -23,8 +23,34 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest httpx
+          pip install pytest httpx dvc
 
-      - name: Run tests
+      - name: Run API tests
         run: |
-          python -m pytest -v
+          python -m pytest tests/test_routes.py -v
+
+      # - name: Pull DVC artifacts
+      #   run: |
+      #     dvc pull
+      #
+      # Post remote configuration, this step will restore:
+      # - models/risk_model_complete_pipeline.joblib
+      # - models/claim_model_complete_pipeline.joblib
+      # - outputs/feature_schema.json
+
+      # - name: Run feature schema tests
+      #   run: |
+      #     python -m pytest tests/test_schema.py -v
+      #
+      # Post DVC remote setup, this will validate:
+      # - outputs/feature_schema.json exists
+      # - it is valid JSON
+      # - it contains content
+
+      # - name: Run model artifact tests
+      #   run: |
+      #     python -m pytest tests/test_artifacts.py -v
+      #
+      # Post DVC remote setup, this will validate:
+      # - models/risk_model_complete_pipeline.joblib exists
+      # - models/claim_model_complete_pipeline.joblib exists
