@@ -265,6 +265,91 @@ API docs available at: `http://localhost:8000/docs`
 
 ---
 
+## AWS
+
+ECR Creation
+```bash
+aws ecr create-repository --repository-name healthcare-api --region us-east-1
+aws ecr create-repository --repository-name healthcare-gradio --region us-east-1
+```
+
+🚀 AWS CLI Configuration for ECR (Docker Deployment)
+
+This guide explains how to configure AWS CLI to authenticate and interact with Amazon ECR for Docker image push/pull.
+
+📌 Prerequisites
+
+Before proceeding, ensure:
+
+AWS account is created
+IAM user is created with permissions:
+AmazonEC2ContainerRegistryFullAccess
+Access keys are generated for the IAM user
+🔐 Step 1: Create Access Keys
+Go to AWS Console → IAM → Users
+Select your user (e.g., ecr-user)
+Navigate to Security Credentials
+Click Create Access Key
+Choose:
+Use case: Command Line Interface (CLI)
+Copy:
+✅ AWS Access Key ID
+✅ AWS Secret Access Key
+
+⚠️ Save the secret key securely (shown only once)
+
+⚙️ Step 2: Configure AWS CLI
+
+Run the following command:
+
+aws configure
+
+Enter the following details:
+
+AWS Access Key ID: <your-access-key>
+AWS Secret Access Key: <your-secret-key>
+Default region name: us-east-1
+Default output format: json
+🌍 Region Information
+Ensure region matches your ECR repository region
+Example:
+ECR URL: xxxx.dkr.ecr.us-east-1.amazonaws.com
+Region: us-east-1
+✅ Step 3: Verify Configuration
+
+Run:
+```bash
+aws sts get-caller-identity
+```
+Expected output:
+```json
+{
+  "UserId": "...",
+  "Account": "...",
+  "Arn": "arn:aws:iam::...:user/..."
+}
+```
+🔐 Step 4: Login to AWS ECR
+
+Run:
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
+```
+Example:
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 44331118
+```
+Docker Tag Examples
+```bash
+docker tag healthcare-api:latest 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-api:latest
+docker tag healthcare-gradio:latest 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-gradio:latest
+```
+
+Docker Push Examples
+```bash
+docker push 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-api:latest
+docker push 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-gradio:latest
+```
 ## 📊 Model Performance
 
 | Model | Algorithm | Test Accuracy | Weighted F1 |
