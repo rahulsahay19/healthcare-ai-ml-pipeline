@@ -42,3 +42,7 @@ requests
 
 # Utilities
 python-dotenv
+
+# test
+pytest
+httpx
