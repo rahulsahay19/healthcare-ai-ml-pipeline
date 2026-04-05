@@ -338,18 +338,18 @@ aws ecr get-login-password --region us-east-1 | docker login --username AWS --pa
 ```
 Example:
 ```bash
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 44331118
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 260597895391.dkr.ecr.us-east-1.amazonaws.com
 ```
 Docker Tag Examples
 ```bash
-docker tag healthcare-api:latest 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-api:latest
-docker tag healthcare-gradio:latest 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-gradio:latest
+docker tag healthcare-api:latest 260597895391.dkr.ecr.us-east-1.amazonaws.com/healthcare-api:latest
+docker tag healthcare-gradio:latest 260597895391.dkr.ecr.us-east-1.amazonaws.com/healthcare-gradio:latest
 ```
 
 Docker Push Examples
 ```bash
-docker push 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-api:latest
-docker push 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-gradio:latest
+docker push 260597895391.dkr.ecr.us-east-1.amazonaws.com/healthcare-api:latest
+docker push 260597895391.dkr.ecr.us-east-1.amazonaws.com/healthcare-gradio:latest
 ```
 
 DVC Remote(S3) Configuration:
@@ -360,6 +360,39 @@ dvc remote list
 dvc status
 dvc push
 ``` 
+
+EKS Setup
+```bash
+choco install eksctl -y
+# Setting the variables
+export AWS_REGION=us-east-1
+export CLUSTER_NAME=healthcare-eks
+export ECR_REGISTRY=260597895391.dkr.ecr.us-east-1.amazonaws.com
+# add policies to the user 
+ AmazonEKSClusterPolicy
+AmazonEKSServicePolicy
+AmazonEKSWorkerNodePolicy
+AmazonEC2ContainerRegistryReadOnly
+AdministratorAccess # Otherwise use only this
+# Creating the EKS Cluster
+eksctl create cluster --name healthcare-eks --region us-east-1 --nodes 2 --node-type t3.medium --managed
+# verify the cluster
+eksctl get cluster --region us-east-1
+# Configure kubeconfig
+aws eks update-kubeconfig --region us-east-1 --name healthcare-eks
+# Verify Kubernetes connectivity
+kubectl get nodes
+kubectl get pods -A
+```
+
+Manually Deploy K8s
+```bash
+kubectl apply -f k8s/
+#then verify
+kubectl get deployments
+kubectl get pods
+kubectl get svc
+```
 ## 📊 Model Performance
 
 | Model | Algorithm | Test Accuracy | Weighted F1 |

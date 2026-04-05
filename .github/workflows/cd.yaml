@@ -1,0 +1,79 @@
+name: CD Pipeline
+
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
+
+jobs:
+  build-push-deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    env:
+      AWS_REGION: us-east-1
+      ECR_REGISTRY: 260597895391.dkr.ecr.us-east-1.amazonaws.com
+      ECR_REPOSITORY_API: healthcare-api
+      ECR_REPOSITORY_GRADIO: healthcare-gradio
+      EKS_CLUSTER_NAME: healthcare-eks
+      IMAGE_TAG: ${{ github.sha }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: arn:aws:iam::260597895391:role/github-actions-deploy-role
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build API image
+        run: |
+          docker build -t $ECR_REPOSITORY_API:latest -f Dockerfile .
+
+      - name: Tag API image
+        run: |
+          docker tag $ECR_REPOSITORY_API:latest $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG
+          docker tag $ECR_REPOSITORY_API:latest $ECR_REGISTRY/$ECR_REPOSITORY_API:latest
+
+      - name: Push API image
+        run: |
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_API:latest
+
+      - name: Build Gradio image
+        run: |
+          docker build -t $ECR_REPOSITORY_GRADIO:latest -f gradio/Dockerfile ./gradio
+
+      - name: Tag Gradio image
+        run: |
+          docker tag $ECR_REPOSITORY_GRADIO:latest $ECR_REGISTRY/$ECR_REPOSITORY_GRADIO:$IMAGE_TAG
+          docker tag $ECR_REPOSITORY_GRADIO:latest $ECR_REGISTRY/$ECR_REPOSITORY_GRADIO:latest
+
+      - name: Push Gradio image
+        run: |
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_GRADIO:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_GRADIO:latest
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
+
+      - name: Update Kubernetes manifests to new tags
+        run: |
+          sed -i "s|$ECR_REGISTRY/$ECR_REPOSITORY_API:latest|$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG|g" k8s/api-deployment.yaml
+          sed -i "s|$ECR_REGISTRY/$ECR_REPOSITORY_GRADIO:latest|$ECR_REGISTRY/$ECR_REPOSITORY_GRADIO:$IMAGE_TAG|g" k8s/gradio-deployment.yaml
+
+      - name: Deploy to EKS
+        run: |
+          kubectl apply -f k8s/
+          kubectl rollout status deployment/healthcare-api
+          kubectl rollout status deployment/healthcare-gradio

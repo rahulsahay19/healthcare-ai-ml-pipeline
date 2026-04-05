@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthcare-gradio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healthcare-gradio
+  template:
+    metadata:
+      labels:
+        app: healthcare-gradio
+    spec:
+      containers:
+        - name: healthcare-gradio
+          image: 260597895391.dkr.ecr.us-east-1.amazonaws.com/healthcare-gradio:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7860

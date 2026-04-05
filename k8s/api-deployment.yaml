@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthcare-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: healthcare-api
+  template:
+    metadata:
+      labels:
+        app: healthcare-api
+    spec:
+      containers:
+        - name: healthcare-api
+          image: 260597895391.dkr.ecr.us-east-1.amazonaws.com/healthcare-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
