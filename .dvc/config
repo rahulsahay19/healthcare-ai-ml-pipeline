@@ -1,4 +1,6 @@
 [core]
-    remote = localstore
+    remote = myremote
 ['remote "localstore"']
     url = ../dvc-storage
+['remote "myremote"']
+    url = s3://amzn-s3-healthcare/dvc-store

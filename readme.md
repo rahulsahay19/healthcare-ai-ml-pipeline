@@ -284,6 +284,7 @@ Before proceeding, ensure:
 AWS account is created
 IAM user is created with permissions:
 AmazonEC2ContainerRegistryFullAccess
+AmazonS3FullAccess --> for S3
 Access keys are generated for the IAM user
 🔐 Step 1: Create Access Keys
 Go to AWS Console → IAM → Users
@@ -350,6 +351,15 @@ Docker Push Examples
 docker push 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-api:latest
 docker push 443311181111.dkr.ecr.us-east-1.amazonaws.com/healthcare-gradio:latest
 ```
+
+DVC Remote(S3) Configuration:
+Make sure to add the AmazonS3FullAccess in Users --> for S3
+```bash
+dvc remote add -d myremote s3://amzn-s3-healthcare/dvc-store
+dvc remote list
+dvc status
+dvc push
+``` 
 ## 📊 Model Performance
 
 | Model | Algorithm | Test Accuracy | Weighted F1 |
